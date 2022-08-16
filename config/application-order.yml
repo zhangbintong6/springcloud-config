@@ -1,10 +1,10 @@
 server:
-  port: 8201
+  port: 8301
 
 spring:
   application:
     # 同一服务多实例模拟,服务名得一致,负载均衡才能看到效果
-    name: beter-spring-cloud-producer-user
+    name: beter-spring-cloud-producer-order
   main:
     # 允许定义相同的bean对象 去覆盖原有的
     allow-bean-definition-overriding: true
@@ -27,7 +27,7 @@ eureka:
       registry-fetch-interval-seconds: 5 # 抓取服务列表
   instance:
     prefer-ip-address: true
-    # instance-id: beter-spring-cloud-producer-user
+    # instance-id: beter-spring-cloud-producer-order
     instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${spring.application.instance_id:${server.port}}
     # 设置当前Client每1秒向Server发送一次心跳，单位秒, 续约更新时间间隔（默认30秒）
     lease-renewal-interval-in-seconds: 5
@@ -36,7 +36,7 @@ eureka:
 
 # 注册到eureka时，点进去的一些信息
 info:
-  version: beter-spring-cloud-producer-user(prod)
+  version: beter-spring-cloud-producer-order(from config server)
   app.auth: beter
   app.name: zbt
   company.name: www.baidu.com
