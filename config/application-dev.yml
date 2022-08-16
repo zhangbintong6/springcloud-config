@@ -1,9 +1,10 @@
 server:
-  port: 8082
+  port: 8201
 
 spring:
   application:
-    name: beter-spring-cloud-consumer-user
+    # 同一服务多实例模拟,服务名得一致,负载均衡才能看到效果
+    name: beter-spring-cloud-producer-user
   main:
     # 允许定义相同的bean对象 去覆盖原有的
     allow-bean-definition-overriding: true
@@ -16,6 +17,7 @@ spring:
       probability: 1
 ############zipkin配置###########
 
+
 #####################################################eureka相关###############################################################
 eureka:
   client:
@@ -25,7 +27,7 @@ eureka:
       registry-fetch-interval-seconds: 5 # 抓取服务列表
   instance:
     prefer-ip-address: true
-    # instance-id: beter-spring-cloud-consumer-user
+    # instance-id: beter-spring-cloud-producer-user
     instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${spring.application.instance_id:${server.port}}
     # 设置当前Client每1秒向Server发送一次心跳，单位秒, 续约更新时间间隔（默认30秒）
     lease-renewal-interval-in-seconds: 5
@@ -34,7 +36,7 @@ eureka:
 
 # 注册到eureka时，点进去的一些信息
 info:
-  version: beter-spring-cloud-consumer-user
+  version: beter-spring-cloud-producer-user
   app.auth: beter
   app.name: zbt
   company.name: www.baidu.com
@@ -62,48 +64,7 @@ feign:
       min-request-size: 2048
     response:
       enabled: true
-
-  # 开启Feign对Hystrix的支持
-  hystrix:
-    enabled: true
 #####################################################feign相关###############################################################
-
-
-#####################################################hystrix相关###############################################################
-# 所有的HystrixCommand的请求超时时间,是全局的,不设置默认值为1000毫秒
-# 类级别的和方法级别的服务降级都设置了，如果provider报错,返回类级别的降级信息(其他得另作讨论)
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 2000
-#####################################################hystrix相关###############################################################
-
-
-#####################################################ribbon相关###############################################################
-#  #负载均衡超时时间配置，路由规则是注册中心ID生效，此处生效
-#  #总的超时时间 = (1 + MaxAutoRetries + MaxAutoRetriesNextServer) * ReadTimeout
-ribbon:
-  ReadTimeout: 5000
-  ConnectTimeout: 5000
-# RandomRule    随机策略    随机选择 Server
-# RoundRobinRule    轮训策略    按顺序循环选择 Server
-# RetryRule    重试策略    在一个配置时问段内当选择 Server 不成功，则一直尝试选择一个可用的 Server
-# BestAvailableRule    最低并发策略    逐个考察 Server，如果 Server 断路器打开，则忽略，再选择其中并发连接最低的 Server
-# AvailabilityFilteringRule    可用过滤策略    过滤掉一直连接失败并被标记为 circuit tripped 的 Server，过滤掉那些高并发连接的 Server（active connections 超过配置的网值）
-# ResponseTimeWeightedRule    响应时间加权策略    根据 Server 的响应时间分配权重。响应时间越长，权重越低，被选择到的概率就越低；响应时间越短，权重越高，被选择到的概率就越高。这个策略很贴切，综合了各种因素，如：网络、磁盘、IO等，这些因素直接影响着响应时间
-# ZoneAvoidanceRule    区域权衡策略    综合判断 Server 所在区域的性能和 Server 的可用性轮询选择 Server，并且判定一个 AWS Zone 的运行性能是否可用，剔除不可用的 Zone 中的所有 Server
-# 修改负载均衡策略为：随机策略,可以根据不同的微服务名称指定不同的负载均衡策略【配置文件的负载均衡策略】
-# [beter-spring-cloud-producer-user,beter-spring-cloud-producer-order]为服务提供者服务名
-beter-spring-cloud-producer-user:
-  ribbon:
-    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
-beter-spring-cloud-producer-order:
-  ribbon:
-    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
-#####################################################ribbon相关###############################################################
 
 
 # 调用http://localhost:port/actuator/service-registry  下线参数{"status":"DOWN"}  上线参数{"status":"UP"}
@@ -111,7 +72,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,env,hystrix.stream,service-registry
+        include: health,info,env,hystrix.stream,service-registry,refresh
   # 开启shutdown监控终端
   endpoint:
     shutdown:
