@@ -1,5 +1,5 @@
 server:
-  port: 81012
+  port: 8081
 
 spring:
   application:
@@ -21,7 +21,7 @@ eureka:
   client:
     service-url:
       # 指定当前Client所要连接的eureka Server
-      defaultZone: http://localhost:8001/eureka
+      defaultZone: http://localhost:8001/eureka,http://localhost:8002/eureka,http://localhost:8003/eureka
       registry-fetch-interval-seconds: 5 # 抓取服务列表
   instance:
     prefer-ip-address: true
