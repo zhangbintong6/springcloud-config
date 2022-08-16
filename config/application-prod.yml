@@ -1,5 +1,5 @@
 server:
-  port: 8212
+  port: 8201
 
 spring:
   application:
@@ -23,7 +23,7 @@ eureka:
   client:
     service-url:
       # 指定当前Client所要连接的eureka Server
-      defaultZone: http://localhost:8001/eureka,http://localhost:8002/eureka,http://localhost:8003/eureka
+      defaultZone: http://localhost:8001/eureka
       registry-fetch-interval-seconds: 5 # 抓取服务列表
   instance:
     prefer-ip-address: true
@@ -36,7 +36,7 @@ eureka:
 
 # 注册到eureka时，点进去的一些信息
 info:
-  version: beter-spring-cloud-producer-user
+  version: beter-spring-cloud-producer-user(prod)
   app.auth: beter
   app.name: zbt
   company.name: www.baidu.com
