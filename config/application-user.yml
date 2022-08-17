@@ -36,7 +36,7 @@ eureka:
 
 # 注册到eureka时，点进去的一些信息
 info:
-  version: beter-spring-cloud-producer-user(from config server)
+  version: beter-spring-cloud-producer-user(server-config)
   app.auth: beter
   app.name: zbt
   company.name: www.baidu.com
@@ -67,28 +67,6 @@ feign:
   hystrix:
     enabled: true
 #####################################################feign相关###############################################################
-
-
-#####################################################hystrix相关###############################################################
-# 所有的HystrixCommand的请求超时时间,是全局的,不设置默认值为1000毫秒
-# 类级别的和方法级别的服务降级都设置了，如果provider报错,返回类级别的降级信息(其他得另作讨论)
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 2000
-#####################################################hystrix相关###############################################################
-
-
-#####################################################ribbon相关###############################################################
-#  #负载均衡超时时间配置，路由规则是注册中心ID生效，此处生效
-#  #总的超时时间 = (1 + MaxAutoRetries + MaxAutoRetriesNextServer) * ReadTimeout
-ribbon:
-  ReadTimeout: 5000
-  ConnectTimeout: 5000
-#####################################################ribbon相关###############################################################
 
 
 # 调用http://localhost:port/actuator/service-registry  下线参数{"status":"DOWN"}  上线参数{"status":"UP"}
