@@ -48,8 +48,6 @@ info:
 # https://developer.51cto.com/article/709758.html
 feign:
   client:
-    httpclient: # 开启 HttpClient
-      enabled: true
     config:
       default:
         connectTimeout: 5000   # 指定Feign客户端连接提供者的超时时限
@@ -64,6 +62,10 @@ feign:
       min-request-size: 2048
     response:
       enabled: true
+
+  # 开启Feign对Hystrix的支持
+  hystrix:
+    enabled: true
 #####################################################feign相关###############################################################
 
 
