@@ -1,5 +1,5 @@
-# server:
-#   port: 8301
+#server:
+#  port: 8301
 
 spring:
   application:
@@ -11,11 +11,13 @@ spring:
 ############zipkin相关###########
   zipkin:
     base-url: http://localhost:9411
+    # 让nacos把它当成一个URL，而不要当做服务名
+    # discovery-client-enabled: false
   sleuth:
     sampler:
       # 采用率值介于：0到1，1表示全部采集，默认的采样比例为: 0.1(即10%)。
       probability: 1
-############zipkin配置###########
+############zipkin相关###########
 
 
 #####################################################eureka相关###############################################################
@@ -36,7 +38,7 @@ eureka:
 
 # 注册到eureka时，点进去的一些信息
 info:
-  version: beter-spring-cloud-producer-user(server-config)
+  version: beter-spring-cloud-producer-user(from server)
   app.auth: beter
   app.name: zbt
   company.name: www.baidu.com
