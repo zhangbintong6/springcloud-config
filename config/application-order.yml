@@ -38,7 +38,7 @@ eureka:
 
 # 注册到eureka时，点进去的一些信息
 info:
-  version: beter-spring-cloud-producer-order(from server)
+  version: beter-spring-cloud-producer-order(from server1)
   app.auth: beter
   app.name: zbt
   company.name: www.baidu.com
