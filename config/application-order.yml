@@ -76,7 +76,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,env,hystrix.stream,service-registry,refresh
+        include: health,info,env,hystrix.stream,service-registry,refresh,bus-refresh
   # 开启shutdown监控终端
   endpoint:
     shutdown:
